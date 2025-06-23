@@ -22,4 +22,4 @@ Generated Caption
 
 "a large brown dog laying on top of a grass covered field"
 
-![Screenshot%202025-06-23](%20091543.png)
+![Screenshot%202025-06-23](https://github.com/Sumitdighe10/Image-Captioning-Transformer/blob/main/Screenshot%202025-06-23%20091543.png)
