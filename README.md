@@ -87,9 +87,9 @@ topk = torch.topk(log_probs, beam_size)
 
 🗂 Dataset- MS COCO 2017 Captions
 
--Each image has 5 human-annotated captions
+- Each image has 5 human-annotated captions
 
--Loaded using torchvision.datasets.CocoCaptions
+- Loaded using torchvision.datasets.CocoCaptions
 
 
 🧮 Optimization
@@ -155,6 +155,21 @@ def generate_caption(image):
 | Caption Logic   | Beam Search                | Keeps top-k most probable sequences                              |
 | Interface       | Gradio                     | `gr.Interface(fn=..., inputs=..., outputs=...)`                  |
 | Hardware Accel. | CUDA + AMP                 | Enabled using `torch.device("cuda")`                             |
+
+
+📈 Roadmap & Enhancements
+
+- ✅ Beam Search Decoding implemented
+
+- 🔲 Attention Visualization heatmaps (Coming Next)
+
+- 🔲 Diverse beam sampling, top-p (nucleus) sampling
+
+- 🔲 Dockerization for easy cross-platform deployment
+
+- 🔲 Deploy on Hugging Face Spaces / Streamlit Cloud
+
+- 🔲 Caption feedback refinement using LLM
 
 
 📫 Contact
