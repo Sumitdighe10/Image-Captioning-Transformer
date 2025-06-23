@@ -1,18 +1,43 @@
+🌟 Image Captioning with Transformer Decoder + ResNet-50 Encoder
+
+This project implements an end-to-end Image Caption Generator using a Transformer Decoder and a pre-trained ResNet-50 CNN Encoder. It supports beam search decoding, is trained on the MS COCO dataset, uses CUDA acceleration, and is deployed as a Gradio app for real-time caption generation from images.
+
+💡 What This Project Does
+
+Given an input image, the model generates a natural language description (caption). It combines:
+
+Visual understanding via ResNet-50 feature extractor
+
+Sequence generation via Transformer Decoder
+
+Caption enhancement using Beam Search decoding
+
+🎨 Sample Outputs
+
+Image
+
+Generated Caption
+
+🐶 Dog
+
+"a large brown dog laying on top of a grass covered field"
+
+👤 Person
+
+"a man wearing a black shirt and white shirt and tie"
+
 📊 BLEU Score Performance (Top 100 Validation Samples)
 
 BLEU-1: 0.3541
-
 BLEU-2: 0.2027
-
 BLEU-3: 0.1269
-
 BLEU-4: 0.0853
 
 These scores reflect competitive accuracy for a lightweight model trained on limited compute.
 
 🧰 Architecture Overview
 
-🔢 Encoder (CNN)
+📘 Encoder (CNN)
 
 resnet = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
 features = nn.Sequential(*list(resnet.children())[:-2])
@@ -169,17 +194,3 @@ GPU Acceleration
 CUDA + AMP
 
 Enabled with torch.device("cuda") and autocast()
-
-📈 Roadmap & Enhancements
-
-✅ Beam Search Decoding implemented
-
-🔲 Attention Visualization heatmaps (Coming Next)
-
-🔲 Diverse beam sampling, top-p (nucleus) sampling
-
-🔲 Dockerization for easy cross-platform deployment
-
-🔲 Deploy on Hugging Face Spaces / Streamlit Cloud
-
-🔲 Caption feedback refinement using LLM
