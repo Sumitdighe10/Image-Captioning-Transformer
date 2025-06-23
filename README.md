@@ -21,7 +21,8 @@ Given an input image, the model generates a human-like caption describing its co
 | 🐶 Dog | "a large brown dog laying on top of a grass covered field" |
 
 ---
-![Screenshot%202025-06-23](Screenshot%20091543.png)
+![Screenshot%202025-06-23](https://github.com/Sumitdighe10/Image-Captioning-Transformer/blob/main/Screenshot%202025-06-23%20091543.png)
+
 
 ## 📊 BLEU Score Performance (Top 100 Validation Samples)
 
@@ -38,6 +39,7 @@ Given an input image, the model generates a human-like caption describing its co
 
 ## 🧰 Architecture Overview
 
+
 ### 📘 Encoder (ResNet-50 CNN)
 
 ```python
@@ -45,11 +47,13 @@ resnet = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
 features = nn.Sequential(*list(resnet.children())[:-2])
 features = nn.Conv2d(2048, embed_size, kernel_size=1)(features)
 ```
-Uses pretrained ResNet-50 for image feature extraction
 
-Final fully-connected layer removed
+- Uses pretrained ResNet-50 for image feature extraction
 
-Feature map reshaped to [sequence_len, batch_size, embed_dim]
+- Final fully-connected layer removed
+
+- Feature map reshaped to [sequence_len, batch_size, embed_dim]
+
 
 ### 🌐 Decoder (Transformer)
 
@@ -59,11 +63,13 @@ positional_encoding = PositionalEncoding(embed_size)
 decoder_layer = nn.TransformerDecoderLayer(embed_size, num_heads=4, dim_feedforward=512)
 decoder = nn.TransformerDecoder(decoder_layer, num_layers=2)
 ```
-Multi-head self-attention captures temporal dependencies
 
-Positional Encoding maintains word order
+- Multi-head self-attention captures temporal dependencies
 
-Final linear layer maps to vocab logits
+- Positional Encoding maintains word order
+
+- Final linear layer maps to vocab logits
+  
 
 ### 🧠 Beam Search Decoding
 
@@ -71,38 +77,46 @@ Final linear layer maps to vocab logits
 log_probs = torch.nn.functional.log_softmax(output[-1, 0], dim=0)
 topk = torch.topk(log_probs, beam_size)
 ```
-Keeps top-k sequences during decoding
 
-Final caption selected based on highest cumulative log probability
+- Keeps top-k sequences during decoding
+
+- Final caption selected based on highest cumulative log probability
+
 
 🚀 Training Pipeline
-🗂 Dataset
-MS COCO 2017 Captions
 
-Each image has 5 human-annotated captions
+🗂 Dataset- MS COCO 2017 Captions
 
-Loaded using torchvision.datasets.CocoCaptions
+-Each image has 5 human-annotated captions
+
+-Loaded using torchvision.datasets.CocoCaptions
+
 
 🧮 Optimization
+
 ```python
 criterion = nn.CrossEntropyLoss(ignore_index=pad_token)
 optimizer = torch.optim.Adam(model.parameters(), lr=3e-4)
 ```
 
-CrossEntropyLoss with padding mask
+- CrossEntropyLoss with padding mask
 
-Adam Optimizer with gradient clipping
+- Adam Optimizer with gradient clipping
 
-AMP training using torch.cuda.amp for mixed precision
+- AMP training using torch.cuda.amp for mixed precision
+
 
 🏋️‍♀️ Strategy
-50 epochs with early stopping and checkpointing
 
-Vocabulary built using word frequency threshold
+- 50 epochs with early stopping and checkpointing
 
-Trained on NVIDIA GPU (CUDA)
+- Vocabulary built using word frequency threshold
+
+- Trained on NVIDIA GPU (CUDA)
+
 
 ### 🖼️ Deployment via Gradio
+
 ```python
 def generate_caption(image):
     tensor = transform(image).to(device)
@@ -110,14 +124,15 @@ def generate_caption(image):
     return caption
 ```
 
-UI built with gr.Interface
+- UI built with gr.Interface
 
-Drag-and-drop image upload
+- Drag-and-drop image upload
 
-Returns caption in real-time
+- Returns caption in real-time
 
 
 📲 Real-World Applications
+
 🧏 Accessibility: Describe visual elements for visually impaired/deaf users via speech/text
 
 🤖 Robotics: Let robots explain surroundings using language
@@ -125,6 +140,7 @@ Returns caption in real-time
 📸 Surveillance: Caption camera footage for automated logging
 
 🛒 E-commerce: Improve tagging and image-based search relevance
+
 
 ⚙️ Tech Stack Breakdown
 
